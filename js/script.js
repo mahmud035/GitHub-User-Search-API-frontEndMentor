@@ -16,12 +16,46 @@ document.getElementById('search-field').addEventListener('keydown', (e) => {
 });
 
 const loadUser = (userName) => {
-  const url = `https://api.github.com/users/${userName}`;
-  console.log(url);
+  try {
+    const url = `https://api.github.com/users/${userName}`;
+    // console.log(url);
+
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => displayUser(data));
+
+    loadUserRepos(userName);
+  } catch (err) {
+    console.log(err.message);
+  }
+};
+
+const loadUserRepos = (userName) => {
+  const url = `https://api.github.com/users/${userName}/repos?sort=created`;
+
+  //* use sort for selecting latest repositories
+  // console.log(url);
 
   fetch(url)
     .then((res) => res.json())
-    .then((data) => displayUser(data));
+    .then((data) => displayUserRepos(data));
+};
+
+const displayUserRepos = (repos) => {
+  const reposElement = document.getElementById('repos');
+  const latestFiveRepos = repos.slice(0, 5);
+
+  latestFiveRepos.forEach((repo) => {
+    const repoElement = document.createElement('a');
+    repoElement.classList.add('repo');
+    repoElement.href = repo.html_url;
+    repoElement.innerText = repo.full_name;
+    repoElement.target = '_blank';
+
+    reposElement.appendChild(repoElement);
+  });
+  console.log(latestFiveRepos);
+  console.log(repos);
 };
 
 const displayUser = (user) => {
@@ -39,7 +73,7 @@ const displayUser = (user) => {
   } else {
     const userInfoDiv = document.createElement('div');
     userInfoDiv.innerHTML = `
-       <div class="row">
+      <div class="row">
           <div class="col-5">
             <img
               class="user-profile-picture"
@@ -48,34 +82,34 @@ const displayUser = (user) => {
             />
           </div>
           <div class="col-7">
-            <h4>${user?.name}</h4>
-            <a href="${
-              user?.html_url
-            }" target="_blank" class="user-profile-link " >${user?.login}</a>
-            <p>Joined ${user?.created_at}</p>
+             <h4>${user?.name ? user.name : user.login}</h4>
+             <a href="${
+               user?.html_url
+             }" target="_blank" class="user-profile-link " >${user?.login} </a>
+             <p>Joined ${user?.created_at}</p>
           </div>
-      </div>
-      <div class="row py-4">
-          <p>${user.bio ? user.bio : 'This profile has no bio'}</p>
-      </div>
+         </div>
+         <div class="row py-4">
+            <p>${user.bio ? user.bio : 'This profile has no bio'}</p>
+          </div>
 
-      <div class="row user-inner-info">
+          <div class="row user-inner-info">
           <div class="col">
-            <p>Repos</p>
-            <h4>${user?.public_repos}</h4>
+             <p>Repos</p>
+             <h4>${user?.public_repos}</h4>
           </div>
           <div class="col">
-            <p>Followers</p>
-            <h4>${user.followers}</h4>
+             <p>Followers</p>
+             <h4>${user.followers}</h4>
           </div>
           <div class="col">
-            <p>Following</p>
-            <h4>${user.following}</h4>
+             <p>Following</p>
+             <h4>${user.following}</h4>
           </div>
-      </div>
+          </div>
 
-        <div class="row py-4 gy-3">
-          <!-- item-1 -->
+           <div class="row py-4 gy-3">
+           <!-- item-1 -->
           <div class="col-sm-6  d-flex align-items-center gap-3">
             <img src="./images/icon-location.svg" alt="" />
              <a href="https://www.google.com/maps/place/${
@@ -83,13 +117,13 @@ const displayUser = (user) => {
              } class="mt-1" target="_blank">${
       user?.location ? user?.location : 'Not Available'
     }</a>
-        </div>
+          </div>
           <!-- item-2 -->
           <div class="col-sm-6 d-flex align-items-center gap-3">
-            <img src="./images/icon-twitter.svg" alt="" />
-           <a href="http://twitter.com/${
-             user.twitter_username
-           }" class="mt-1" target="_blank">${
+              <img src="./images/icon-twitter.svg" alt="" />
+             <a href="http://twitter.com/${
+               user.twitter_username
+             }" class="mt-1" target="_blank">${
       user?.twitter_username ? user?.twitter_username : 'Not Available'
     }</a>
           </div>
@@ -97,19 +131,23 @@ const displayUser = (user) => {
           <!-- item-3 -->
           <div class="col-sm-6 d-flex align-items-center gap-3">
             <img src="./images/icon-website.svg" alt="" />
-         <a href="${user.blog}" class="mt-1" target="_blank">${
+            <a href="${user.blog}" class="mt-1" target="_blank">${
       user?.blog ? user.blog : 'Not available'
     }</a>
           </div>
 
           <!-- item-4 -->
           <div class="col-sm-6 d-flex align-items-center gap-3">
-            <img src="./images/icon-company.svg" alt="" />
-          <a href="${user?.company}" class="mt-1" target="_blank">${
+             <img src="./images/icon-company.svg" alt="" />
+             <a href="${user?.company}" class="mt-1" target="_blank">${
       user?.company ? user.company : 'Not Available'
     }</a>
           </div>
-        </div>
+
+          <div id="repos" class="pt-2"> 
+
+          </div>
+    </div>
   `;
 
     userInfoContainer.appendChild(userInfoDiv);
