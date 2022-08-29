@@ -17,6 +17,7 @@ document.getElementById('search-field').addEventListener('keydown', (e) => {
 
 const loadUser = (userName) => {
   const url = `https://api.github.com/users/${userName}`;
+  console.log(url);
 
   fetch(url)
     .then((res) => res.json())
@@ -27,8 +28,17 @@ const displayUser = (user) => {
   userInfoContainer.textContent = '';
 
   console.log(user);
-  const userInfoDiv = document.createElement('div');
-  userInfoDiv.innerHTML = `
+  //* INFO: if no user found we get a message property
+  const errorMessage = user.message ? user.message : ' ';
+
+  if (errorMessage === 'Not Found') {
+    const message = document.createElement('h2');
+    message.innerHTML = `No profile with this username`;
+    userInfoContainer.appendChild(message);
+    return;
+  } else {
+    const userInfoDiv = document.createElement('div');
+    userInfoDiv.innerHTML = `
        <div class="row">
           <div class="col-5">
             <img
@@ -71,8 +81,8 @@ const displayUser = (user) => {
              <a href="https://www.google.com/maps/place/${
                user.location
              } class="mt-1" target="_blank">${
-    user?.location ? user?.location : 'Not Available'
-  }</a>
+      user?.location ? user?.location : 'Not Available'
+    }</a>
         </div>
           <!-- item-2 -->
           <div class="col-sm-6 d-flex align-items-center gap-3">
@@ -80,27 +90,28 @@ const displayUser = (user) => {
            <a href="http://twitter.com/${
              user.twitter_username
            }" class="mt-1" target="_blank">${
-    user?.twitter_username ? user?.twitter_username : 'Not Available'
-  }</a>
+      user?.twitter_username ? user?.twitter_username : 'Not Available'
+    }</a>
           </div>
 
           <!-- item-3 -->
           <div class="col-sm-6 d-flex align-items-center gap-3">
             <img src="./images/icon-website.svg" alt="" />
          <a href="${user.blog}" class="mt-1" target="_blank">${
-    user?.blog ? user.blog : 'Not available'
-  }</a>
+      user?.blog ? user.blog : 'Not available'
+    }</a>
           </div>
 
           <!-- item-4 -->
           <div class="col-sm-6 d-flex align-items-center gap-3">
             <img src="./images/icon-company.svg" alt="" />
           <a href="${user?.company}" class="mt-1" target="_blank">${
-    user?.company ? user.company : 'Not Available'
-  }</a>
+      user?.company ? user.company : 'Not Available'
+    }</a>
           </div>
         </div>
   `;
 
-  userInfoContainer.appendChild(userInfoDiv);
+    userInfoContainer.appendChild(userInfoDiv);
+  }
 };

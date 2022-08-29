@@ -52,8 +52,8 @@ select {
 
 /* CSS Custom Property */
 :root {
-  --dark-mode-elements: hsl(209, 23%, 22%);
-  --dark-mode-bg: hsl(207, 26%, 17%);
+  --dark-mode-elements: #1e2a47;
+  --dark-mode-bg: #141d2f;
   --light-mode-text: hsl(200, 15%, 8%);
   --light-mode-input: hsl(0, 0%, 52%);
   --light-mode-background: hsl(0, 0%, 98%);
@@ -95,7 +95,7 @@ a.user-profile-link {
 }
 
 .user-inner-info {
-  background-color: #1e2a47;
+  background-color: var(--dark-mode-bg);
   border-radius: 10px;
   text-align: center;
   padding: 1rem;
