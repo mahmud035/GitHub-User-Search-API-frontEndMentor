@@ -61,8 +61,8 @@ select {
 }
 
 body {
-  background-color: var(--light-mode-background);
-  color: var(--light-mode-text);
+  background-color: var(--dark-mode-bg);
+  color: var(--white);
   transition: 0.182s;
 }
 
@@ -70,17 +70,61 @@ body {
 
 /* Search GitHub User Profile */
 
+#search-field {
+  background-color: var(--dark-mode-elements);
+  color: var(--white);
+}
+
 /* Display User Info */
 .user-profile-picture {
   max-width: 100px;
-  border: 5px solid teal;
+  border: 5px solid #256d85;
   border-radius: 50%;
 }
 
-.user-info {
-  background-color: var(--white);
+.user-info a {
+  color: var(--white);
 }
 
-.user-info a {
-  color: var(--light-mode-text);
+a.user-profile-link {
+  color: #8fe3cf;
+}
+
+.user-info {
+  background-color: var(--dark-mode-elements);
+}
+
+.user-inner-info {
+  background-color: #1e2a47;
+  border-radius: 10px;
+  text-align: center;
+  padding: 1rem;
+}
+
+@media (max-width: 600px) {
+  .search-user,
+  .user-info {
+    width: 95% !important;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 767px) {
+  .search-user,
+  .user-info {
+    width: 90% !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 850px) {
+  .search-user,
+  .user-info {
+    width: 70% !important;
+  }
+}
+
+@media (min-width: 1250px) {
+  .search-user,
+  .user-info {
+    max-width: 35% !important;
+  }
 }

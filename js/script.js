@@ -10,6 +10,7 @@ document.getElementById('search-field').addEventListener('keydown', (e) => {
     searchElement.value = '';
 
     loadUser(userName);
+    document.querySelector('.search-user').style.marginTop = '3.5rem';
     userInfoContainer.style.display = 'block';
   }
 });
@@ -37,18 +38,18 @@ const displayUser = (user) => {
             />
           </div>
           <div class="col-7">
-            <h3>${user?.name}</h3>
-            <a href="${user?.html_url}" target="_blank" class="text-primary" >${
-    user?.login
-  }</a>
+            <h4>${user?.name}</h4>
+            <a href="${
+              user?.html_url
+            }" target="_blank" class="user-profile-link " >${user?.login}</a>
             <p>Joined ${user?.created_at}</p>
           </div>
-        </div>
-        <div class="row py-4">
+      </div>
+      <div class="row py-4">
           <p>${user.bio ? user.bio : 'This profile has no bio'}</p>
-        </div>
+      </div>
 
-        <div class="row">
+      <div class="row user-inner-info">
           <div class="col">
             <p>Repos</p>
             <h4>${user?.public_repos}</h4>
@@ -61,40 +62,40 @@ const displayUser = (user) => {
             <p>Following</p>
             <h4>${user.following}</h4>
           </div>
-        </div>
+      </div>
 
-        <div class="row row-cols-sm-2 py-4">
+        <div class="row py-4 gy-3">
           <!-- item-1 -->
-          <div class="col d-flex align-items-center gap-3">
+          <div class="col-sm-6  d-flex align-items-center gap-3">
             <img src="./images/icon-location.svg" alt="" />
              <a href="https://www.google.com/maps/place/${
                user.location
-             } class="mt-2" target="_blank">${
+             } class="mt-1" target="_blank">${
     user?.location ? user?.location : 'Not Available'
   }</a>
-          </div>
+        </div>
           <!-- item-2 -->
-          <div class="col d-flex align-items-center gap-3">
+          <div class="col-sm-6 d-flex align-items-center gap-3">
             <img src="./images/icon-twitter.svg" alt="" />
            <a href="http://twitter.com/${
              user.twitter_username
-           }" class="mt-2" target="_blank">${
+           }" class="mt-1" target="_blank">${
     user?.twitter_username ? user?.twitter_username : 'Not Available'
   }</a>
           </div>
 
           <!-- item-3 -->
-          <div class="col d-flex align-items-center gap-3">
+          <div class="col-sm-6 d-flex align-items-center gap-3">
             <img src="./images/icon-website.svg" alt="" />
-         <a href="${user.blog}" class="mt-2" target="_blank">${
+         <a href="${user.blog}" class="mt-1" target="_blank">${
     user?.blog ? user.blog : 'Not available'
   }</a>
           </div>
 
           <!-- item-4 -->
-          <div class="col d-flex align-items-center gap-3">
+          <div class="col-sm-6 d-flex align-items-center gap-3">
             <img src="./images/icon-company.svg" alt="" />
-          <a href="${user?.company}" class="mt-2" target="_blank">${
+          <a href="${user?.company}" class="mt-1" target="_blank">${
     user?.company ? user.company : 'Not Available'
   }</a>
           </div>
