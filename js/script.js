@@ -54,8 +54,14 @@ const displayUserRepos = (repos) => {
 
     reposElement.appendChild(repoElement);
   });
-  console.log(latestFiveRepos);
-  console.log(repos);
+
+  // console.log(latestFiveRepos);
+  // console.log(repos);
+};
+
+const getDateFormat = (dateString) => {
+  const date = new Date(dateString);
+  return date.toDateString();
 };
 
 const displayUser = (user) => {
@@ -86,7 +92,7 @@ const displayUser = (user) => {
              <a href="${
                user?.html_url
              }" target="_blank" class="user-profile-link " >${user?.login} </a>
-             <p>Joined ${user?.created_at}</p>
+             <p>Joined ${getDateFormat(user?.created_at)}</p>
           </div>
          </div>
          <div class="row py-4">
