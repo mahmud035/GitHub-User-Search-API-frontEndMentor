@@ -30,6 +30,7 @@ const loadUser = (userName) => {
   }
 };
 
+//* load user repositories
 const loadUserRepos = (userName) => {
   const url = `https://api.github.com/users/${userName}/repos?sort=created`;
 
